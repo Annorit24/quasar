@@ -1,0 +1,48 @@
+apply plugin: 'java'
+apply plugin: 'maven'
+apply plugin: 'maven-publish'
+apply plugin: 'idea'
+
+group 'xyz.slyseade'
+version '1.0-SNAPSHOT'
+
+def repositoryName = "hytale-dev"
+
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
+
+task ('quasarPublish'){
+    //quasarPublish.finalizedBy publish
+    if(production){
+        repositoryName = "hytale-prod"
+    }
+    
+    System.getenv().each {key,value ->
+        println value
+    }
+}
+
+publishing {
+    repositories {
+        maven {
+            url 'http://nexus.annorit24.xyz/repository/'+repositoryName+"/"
+            credentials {
+                username 'nx-contributor'
+                password System.getenv()['CONTRIBUTOR_PASS']
+            }
+        }
+    }
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+        }
+    }
+}

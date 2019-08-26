@@ -1,0 +1,44 @@
+stages:
+  - build
+  - test
+  - deploy
+
+before_script:
+  - export JAVA_HOME=/usr/lib/jvm/jdk1.8.0_191
+  - export GRADLE_USER_HOME=`pwd`/.gradle/
+  - chmod -R +x .
+
+cache:
+  paths:
+    - .gradle/wrapper
+    - .gradle/caches
+
+build:
+  stage: build
+  script:
+    - ./gradlew build
+  artifacts:
+    paths:
+      - build/libs/*.jar
+    expire_in: 1 day
+
+test:
+  stage: test
+  script:
+    - ./gradlew test
+
+
+
+deploy-prod:
+  stage: deploy
+  script:
+    - gradlew -Pproduction=true quasarPublish
+  only:
+    - master
+
+deploy-dev:
+  stage: deploy
+  script:
+    - gradlew -Pproduction=true quasarPublish
+  only:
+    - develop
