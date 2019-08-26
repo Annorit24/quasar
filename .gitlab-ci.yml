@@ -39,6 +39,6 @@ deploy-prod:
 deploy-dev:
   stage: deploy
   script:
-    - gradlew -Pproduction=true quasarPublish
+    - gradlew -Pproduction=false quasarPublish
   only:
     - develop
