@@ -32,13 +32,13 @@ test:
 deploy-prod:
   stage: deploy
   script:
-    - gradlew -Pproduction=true quasarPublish
+    - gradlew quasarProdPublish
   only:
     - master
 
 deploy-dev:
   stage: deploy
   script:
-    - gradlew -Pproduction=false quasarPublish
+    - gradlew quasarDevPublish
   only:
     - develop

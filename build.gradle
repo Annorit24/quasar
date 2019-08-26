@@ -6,8 +6,7 @@ apply plugin: 'idea'
 group 'xyz.slyseade'
 version '1.0-SNAPSHOT'
 
-def repositoryName = "hytale-dev"
-
+def repositoryName = ""
 
 sourceCompatibility = 1.8
 
@@ -19,15 +18,14 @@ dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }
 
-task ('quasarPublish'){
-    //quasarPublish.finalizedBy publish
-    if(production){
-        repositoryName = "hytale-prod"
-    }
-    
-    System.getenv().each {key,value ->
-        println value
-    }
+task ('quasarProdPublish'){
+    quasarProdPublish.finalizedBy publish
+    repositoryName = "hytale-prod"
+}
+
+task ('quasarDevPublish'){
+    quasarDevPublish.finalizedBy publish
+    repositoryName = "hytale-dev"
 }
 
 publishing {
