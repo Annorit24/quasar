@@ -34,7 +34,7 @@ publishing {
             url 'http://nexus.annorit24.xyz/repository/'+repositoryName+"/"
             credentials {
                 username 'nx-contributor'
-                password System.getenv()['CONTRIBUTOR_PASS']
+                password 'eS2FFs2UunPkasLGVSLZBDFpYUjXDKy482cbLsBKghqT27Juwk'
             }
         }
     }
