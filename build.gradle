@@ -38,8 +38,6 @@ task ('publishProd'){
 
     if (project.hasProperty('pswd')) {
         mypass = pswd
-    }else{
-        throw new InvalidUserDataException('Please specify a password')
     }
 }
 
@@ -49,8 +47,6 @@ task ('publishDev'){
 
     if (project.hasProperty('pswd')) {
         mypass = pswd
-    }else{
-        throw new InvalidUserDataException('Please specify a password')
     }
 }
 
