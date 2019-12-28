@@ -6,7 +6,8 @@ apply plugin: 'idea'
 group 'xyz.slyseade'
 version '1.0-SNAPSHOT'
 
-def repositoryName = ""
+String repositoryName = ""
+String mypass = ""
 
 sourceCompatibility = 1.8
 
@@ -19,13 +20,38 @@ dependencies {
 }
 
 task ('quasarProdPublish'){
-    quasarProdPublish.finalizedBy publish
-    repositoryName = "hytale-prod"
+    if (project.hasProperty('myargs')) {
+        println(myargs)
+    }
+    /*quasarProdPublish.finalizedBy publish
+    repositoryName = "hytale-prod"*/
 }
 
 task ('quasarDevPublish'){
     quasarDevPublish.finalizedBy publish
     repositoryName = "hytale-dev"
+}
+
+task ('publishProd'){
+    publishProd.finalizedBy publish
+    repositoryName = "hytale-prod"
+
+    if (project.hasProperty('pswd')) {
+        mypass = pswd
+    }else{
+        throw new InvalidUserDataException('Please specify a password')
+    }
+}
+
+task ('publishDev'){
+    publishDev.finalizedBy publish
+    repositoryName = "hytale-dev"
+
+    if (project.hasProperty('pswd')) {
+        mypass = pswd
+    }else{
+        throw new InvalidUserDataException('Please specify a password')
+    }
 }
 
 publishing {
@@ -34,7 +60,8 @@ publishing {
             url 'http://nexus.annorit24.xyz/repository/'+repositoryName+"/"
             credentials {
                 username 'nx-contributor'
-                password 'eS2FFs2UunPkasLGVSLZBDFpYUjXDKy482cbLsBKghqT27Juwk'
+                password mypass
+                //eS2FFs2UunPkasLGVSLZBDFpYUjXDKy482cbLsBKghqT27Juwk
             }
         }
     }
